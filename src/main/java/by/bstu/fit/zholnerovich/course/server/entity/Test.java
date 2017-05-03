@@ -18,6 +18,7 @@ public class Test {
     private String Title;
 
     @Column(name = "date", nullable = false)
+    @Temporal(TemporalType.TIMESTAMP)
     private Date date;
 
     public Test() {
