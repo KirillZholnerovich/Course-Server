@@ -14,6 +14,8 @@
         <hibernate-entity-manager.version>5.2.10.Final</hibernate-entity-manager.version>
         <postgres-jdbc.version>9.4.1212</postgres-jdbc.version>
         <dbcp2.version>2.1.1</dbcp2.version>
+        <jackson-databind.version>2.5.3</jackson-databind.version>
+        <jta.version>1.1</jta.version>
     </properties>
     <packaging>war</packaging>
 
@@ -47,7 +49,7 @@
         <dependency>
             <groupId>javax.transaction</groupId>
             <artifactId>jta</artifactId>
-            <version>1.1</version>
+            <version>${jta.version}</version>
         </dependency>
 
         <dependency>
@@ -66,6 +68,14 @@
             <groupId>org.apache.commons</groupId>
             <artifactId>commons-dbcp2</artifactId>
             <version>${dbcp2.version}</version>
+        </dependency>
+
+        <!-- JSON -->
+
+        <dependency>
+            <groupId>com.fasterxml.jackson.core</groupId>
+            <artifactId>jackson-databind</artifactId>
+            <version>${jackson-databind.version}</version>
         </dependency>
     </dependencies>
 
