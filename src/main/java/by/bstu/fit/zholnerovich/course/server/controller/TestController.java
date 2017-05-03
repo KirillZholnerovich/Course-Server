@@ -1,37 +1,39 @@
 package by.bstu.fit.zholnerovich.course.server.controller;
 
 import by.bstu.fit.zholnerovich.course.server.entity.Test;
-import by.bstu.fit.zholnerovich.course.server.repository.TestRepository;
+import by.bstu.fit.zholnerovich.course.server.service.TestService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.ResponseBody;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
-import java.util.Date;
 import java.util.List;
 
 @RestController
-@RequestMapping("/hello")
 public class TestController {
 
     @Autowired
-    private TestRepository testRepository;
+    private TestService service;
 
-    @RequestMapping(value = "/get", method = RequestMethod.GET)
+    @RequestMapping(value = "/testJson", method = RequestMethod.GET)
     @ResponseBody
-    public Test getHello(){
-        List<Test> list = testRepository.findAll();
-        return createMockTest();
+    public List<Test> getAllJsonStrings(){
+        return service.getAll();
     }
 
-    private Test createMockTest() {
-        Test test = new Test();
-        test.setId(1);
-        test.setDate(new Date());
-        test.setTitle("First Title");
-
-        return test;
+    @RequestMapping(value = "/testJson/{id}", method = RequestMethod.GET)
+    @ResponseBody
+    public Test getJsonString(@PathVariable("id") long testId){
+        return service.getById(testId);
     }
 
+    @RequestMapping(value = "/testJson", method = RequestMethod.POST)
+    @ResponseBody
+    public Test saveJsonString(@RequestBody Test test){
+        return service.save(test);
+    }
+
+    @RequestMapping(value = "/testJson/{id}", method = RequestMethod.DELETE)
+    @ResponseBody
+    public void delete(@PathVariable("id") long testId){
+        service.remove(testId);
+    }
 }
