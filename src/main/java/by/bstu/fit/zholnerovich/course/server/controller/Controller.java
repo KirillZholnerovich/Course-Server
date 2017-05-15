@@ -1,24 +1,30 @@
 package by.bstu.fit.zholnerovich.course.server.controller;
 
-import by.bstu.fit.zholnerovich.course.server.entity.Serials;
-import by.bstu.fit.zholnerovich.course.server.service.interfaces.ISerialsService;
+import by.bstu.fit.zholnerovich.course.server.service.interfaces.ISerialService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.List;
+import java.io.IOException;
 
 @RestController
-public class SerialsController {
+public class Controller {
 
     @Autowired
-    private ISerialsService service;
+    private ISerialService service;
 
-    @RequestMapping(value = "/psa", method = RequestMethod.GET)
+    @RequestMapping(value = "/login", params = {"username", "password"}, method = RequestMethod.GET)
     @ResponseBody
-    public List<Serials> getAll(){
-        return service.getAll();
+    public String returnAnswer(@RequestParam(value = "username") String username, @RequestParam(value = "password") String password){
+        return service.answer(username, password);
     }
-//
+
+    @RequestMapping(value = "/serials/get/all", method = RequestMethod.GET)
+    @ResponseBody
+    public String returnSerials() throws IOException{
+        return service.getSerials();
+    }
+
+
 //    @RequestMapping(value = "/testJson/{id}", method = RequestMethod.GET)
 //    @ResponseBody
 //    public Users getJsonString(@PathVariable("id") long testId){

@@ -7,13 +7,13 @@ import java.util.Date;
 
 @Entity
 @Table(name = "users")
-public class Users {
+public class User {
 
     @Id
     @GeneratedValue(generator = "increment")
     @GenericGenerator(name = "increment", strategy = "increment")
-    @Column(name = "user_id")
-    private long id;
+    @Column(name = "id")
+    private Long id;
 
     @Column(name = "username", nullable = false, length = 50)
     private String Username;
@@ -21,14 +21,14 @@ public class Users {
     @Column(name = "password", nullable = false, length = 50)
     private String Password;
 
-    public Users() {
+    public User() {
     }
 
-    public long getId() {
+    public Long getId() {
         return id;
     }
 
-    public void setId(long id) {
+    public void setId(Long id) {
         this.id = id;
     }
 
