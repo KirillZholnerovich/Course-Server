@@ -30,9 +30,8 @@ public class SerialService implements ISerialService {
             if (user.getUsername().equals(username) && user.getPassword().equals(password)){
                 return "Successful";
             }
-            else return "SUKA BLYAT'!";
         }
-        return "Error!";
+        return "SUKA BLYAT'!";
     }
 
     public String getSerials() {
