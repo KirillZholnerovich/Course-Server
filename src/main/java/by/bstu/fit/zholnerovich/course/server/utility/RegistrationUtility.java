@@ -1,8 +1,8 @@
 package by.bstu.fit.zholnerovich.course.server.utility;
 
-import by.bstu.fit.zholnerovich.course.server.soap.RegistreringUser;
+import by.bstu.fit.zholnerovich.course.server.repository.UserRepository;
 import by.bstu.fit.zholnerovich.course.server.entity.User;
-import by.bstu.fit.zholnerovich.course.server.repository.UsersRepository;
+import by.bstu.fit.zholnerovich.course.server.soap.UserData;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
@@ -12,11 +12,10 @@ import java.util.List;
 public class RegistrationUtility {
 
     @Autowired
-    private UsersRepository usersRepository;
+    private UserRepository userRepository;
 
     private static final String ALREADY_REGISTERED = "User with this Username already registered";
     private static final String SUCCESSFUL_REGISTRATION = "User successful registered";
-    private static final String UNKNOWN_EXCEPTION = "Unknown exception";
 
     private List<User> list;
 
@@ -24,13 +23,13 @@ public class RegistrationUtility {
 
     }
 
-    public String registrateUser(RegistreringUser userFromRequest){
-        list = usersRepository.findAll();
+    public String registrateUser(UserData userData){
+        list = userRepository.findAll();
         for (User user : list) {
-            if(user.getUsername().equals(userFromRequest.getUsername()))
+            if(user.getLogin().equals(userData.getUsername()))
                 return ALREADY_REGISTERED;
         }
-        usersRepository.saveAndFlush(new User(userFromRequest.getUsername(), userFromRequest.getPassword()));
+        //userRepository.saveAndFlush(new User(userData.getUsername(), userData.getPassword(), userData.getEmail()));
         return SUCCESSFUL_REGISTRATION;
     }
 }

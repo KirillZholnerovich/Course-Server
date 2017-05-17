@@ -3,21 +3,22 @@
 	<xs:element name="getRegistrationRequest">
         <xs:complexType>
             <xs:sequence>
-                <xs:element name="registreringUser" type="tns:registreringUser"/>
+                <xs:element name="userData" type="tns:userData"/>
             </xs:sequence>
         </xs:complexType>
     </xs:element>
     <xs:element name="getRegistrationResponse">
         <xs:complexType>
             <xs:sequence>
-                <xs:element name="answer" type="xs:string"/>
+                <xs:element name="response" type="xs:string"/>
             </xs:sequence>
         </xs:complexType>
     </xs:element>
-    <xs:complexType name="registreringUser">
+    <xs:complexType name="userData">
         <xs:sequence>
             <xs:element name="username" type="xs:string"/>
             <xs:element name="password" type="xs:string"/>
+            <xs:element name="email" type="xs:string"/>
         </xs:sequence>
     </xs:complexType>
 </xs:schema>

@@ -18,7 +18,7 @@ import javax.xml.bind.annotation.XmlType;
  *   &lt;complexContent>
  *     &lt;restriction base="{http://www.w3.org/2001/XMLSchema}anyType">
  *       &lt;sequence>
- *         &lt;element name="answer" type="{http://www.w3.org/2001/XMLSchema}string"/>
+ *         &lt;element name="response" type="{http://www.w3.org/2001/XMLSchema}string"/>
  *       &lt;/sequence>
  *     &lt;/restriction>
  *   &lt;/complexContent>
@@ -29,36 +29,36 @@ import javax.xml.bind.annotation.XmlType;
  */
 @XmlAccessorType(XmlAccessType.FIELD)
 @XmlType(name = "", propOrder = {
-    "answer"
+    "response"
 })
 @XmlRootElement(name = "getRegistrationResponse", namespace = "http://bstu.by/fit/zholnerovich/course/server/soap")
 public class GetRegistrationResponse {
 
     @XmlElement(namespace = "http://bstu.by/fit/zholnerovich/course/server/soap", required = true)
-    protected String answer;
+    protected String response;
 
     /**
-     * Gets the value of the answer property.
+     * Gets the value of the response property.
      * 
      * @return
      *     possible object is
      *     {@link String }
      *     
      */
-    public String getAnswer() {
-        return answer;
+    public String getResponse() {
+        return response;
     }
 
     /**
-     * Sets the value of the answer property.
+     * Sets the value of the response property.
      * 
      * @param value
      *     allowed object is
      *     {@link String }
      *     
      */
-    public void setAnswer(String value) {
-        this.answer = value;
+    public void setResponse(String value) {
+        this.response = value;
     }
 
 }

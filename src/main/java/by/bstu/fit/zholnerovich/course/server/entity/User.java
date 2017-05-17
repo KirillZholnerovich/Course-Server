@@ -3,6 +3,7 @@ package by.bstu.fit.zholnerovich.course.server.entity;
 import org.hibernate.annotations.GenericGenerator;
 
 import javax.persistence.*;
+import javax.sql.DataSource;
 import java.util.Date;
 
 @Entity
@@ -15,18 +16,27 @@ public class User {
     @Column(name = "id")
     private Long id;
 
-    @Column(name = "username", nullable = false, length = 50)
-    private String Username;
+    @Column(name = "login", nullable = false, length = 50)
+    private String login;
 
     @Column(name = "password", nullable = false, length = 50)
-    private String Password;
+    private String password;
+
+    @Column(name = "email", nullable = false, length = 50)
+    private String email;
+
+    @Column(name = "last_sync")
+    @Temporal(TemporalType.TIMESTAMP)
+    private Date lastSync;
 
     public User() {
     }
 
-    public User(String username, String password) {
-        Username = username;
-        Password = password;
+    public User(String login, String password, String email, Date date ) {
+        this.login = login;
+        this.password = password;
+        this.email = email;
+        this.lastSync = date;
     }
 
     public Long getId() {
@@ -37,19 +47,35 @@ public class User {
         this.id = id;
     }
 
-    public String getUsername() {
-        return Username;
+    public String getLogin() {
+        return login;
     }
 
-    public void setUsername(String username) {
-        Username = username;
+    public void setLogin(String login) {
+        this.login = login;
     }
 
     public String getPassword() {
-        return Password;
+        return password;
     }
 
     public void setPassword(String password) {
-        Password = password;
+        this.password = password;
+    }
+
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
+    }
+
+    public Date getLastSync() {
+        return lastSync;
+    }
+
+    public void setLastSync(Date lastSync) {
+        this.lastSync = lastSync;
     }
 }

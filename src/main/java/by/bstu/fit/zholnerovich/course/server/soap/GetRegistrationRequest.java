@@ -18,7 +18,7 @@ import javax.xml.bind.annotation.XmlType;
  *   &lt;complexContent>
  *     &lt;restriction base="{http://www.w3.org/2001/XMLSchema}anyType">
  *       &lt;sequence>
- *         &lt;element name="registreringUser" type="{http://bstu.by/fit/zholnerovich/course/server/soap}registreringUser"/>
+ *         &lt;element name="userData" type="{http://bstu.by/fit/zholnerovich/course/server/soap}userData"/>
  *       &lt;/sequence>
  *     &lt;/restriction>
  *   &lt;/complexContent>
@@ -29,36 +29,36 @@ import javax.xml.bind.annotation.XmlType;
  */
 @XmlAccessorType(XmlAccessType.FIELD)
 @XmlType(name = "", propOrder = {
-    "registreringUser"
+    "userData"
 })
 @XmlRootElement(name = "getRegistrationRequest", namespace = "http://bstu.by/fit/zholnerovich/course/server/soap")
 public class GetRegistrationRequest {
 
     @XmlElement(namespace = "http://bstu.by/fit/zholnerovich/course/server/soap", required = true)
-    protected RegistreringUser registreringUser;
+    protected UserData userData;
 
     /**
-     * Gets the value of the registreringUser property.
+     * Gets the value of the userData property.
      * 
      * @return
      *     possible object is
-     *     {@link RegistreringUser }
+     *     {@link UserData }
      *     
      */
-    public RegistreringUser getRegistreringUser() {
-        return registreringUser;
+    public UserData getUserData() {
+        return userData;
     }
 
     /**
-     * Sets the value of the registreringUser property.
+     * Sets the value of the userData property.
      * 
      * @param value
      *     allowed object is
-     *     {@link RegistreringUser }
+     *     {@link UserData }
      *     
      */
-    public void setRegistreringUser(RegistreringUser value) {
-        this.registreringUser = value;
+    public void setUserData(UserData value) {
+        this.userData = value;
     }
 
 }

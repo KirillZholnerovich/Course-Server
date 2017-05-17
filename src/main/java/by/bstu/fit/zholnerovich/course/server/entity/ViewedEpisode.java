@@ -5,8 +5,8 @@ import org.hibernate.annotations.GenericGenerator;
 import javax.persistence.*;
 
 @Entity
-@Table(name = "viewed_serials")
-public class ViewedSerial {
+@Table(name = "viewed_episodes")
+public class ViewedEpisode {
 
     @Id
     @GeneratedValue(generator = "increment")
@@ -18,13 +18,16 @@ public class ViewedSerial {
     private User user;
 
     @ManyToOne
-    @JoinColumn(name = "serial_id")
-    private Serial serial;
+    @JoinColumn(name = "episode_id")
+    private Episode episode;
 
-    @Column(name = "viewed_series", nullable = false, length = 500)
-    private String series;
+    public ViewedEpisode() {
 
-    public ViewedSerial() {
+    }
+
+    public ViewedEpisode(User user, Episode episode) {
+        this.user = user;
+        this.episode = episode;
     }
 
     public Long getId() {
@@ -43,19 +46,11 @@ public class ViewedSerial {
         this.user = user;
     }
 
-    public Serial getSerial() {
-        return serial;
+    public Episode getEpisode() {
+        return episode;
     }
 
-    public void setSerial(Serial serial) {
-        this.serial = serial;
-    }
-
-    public String getSeries() {
-        return series;
-    }
-
-    public void setSeries(String series) {
-        this.series = series;
+    public void setEpisode(Episode episode) {
+        this.episode = episode;
     }
 }

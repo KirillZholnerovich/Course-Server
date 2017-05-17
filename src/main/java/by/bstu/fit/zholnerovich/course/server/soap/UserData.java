@@ -8,17 +8,18 @@ import javax.xml.bind.annotation.XmlType;
 
 
 /**
- * <p>Java class for registreringUser complex type.
+ * <p>Java class for userData complex type.
  * 
  * <p>The following schema fragment specifies the expected content contained within this class.
  * 
  * <pre>
- * &lt;complexType name="registreringUser">
+ * &lt;complexType name="userData">
  *   &lt;complexContent>
  *     &lt;restriction base="{http://www.w3.org/2001/XMLSchema}anyType">
  *       &lt;sequence>
  *         &lt;element name="username" type="{http://www.w3.org/2001/XMLSchema}string"/>
  *         &lt;element name="password" type="{http://www.w3.org/2001/XMLSchema}string"/>
+ *         &lt;element name="email" type="{http://www.w3.org/2001/XMLSchema}string"/>
  *       &lt;/sequence>
  *     &lt;/restriction>
  *   &lt;/complexContent>
@@ -28,16 +29,19 @@ import javax.xml.bind.annotation.XmlType;
  * 
  */
 @XmlAccessorType(XmlAccessType.FIELD)
-@XmlType(name = "registreringUser", namespace = "http://bstu.by/fit/zholnerovich/course/server/soap", propOrder = {
+@XmlType(name = "userData", namespace = "http://bstu.by/fit/zholnerovich/course/server/soap", propOrder = {
     "username",
-    "password"
+    "password",
+    "email"
 })
-public class RegistreringUser {
+public class UserData {
 
     @XmlElement(namespace = "http://bstu.by/fit/zholnerovich/course/server/soap", required = true)
     protected String username;
     @XmlElement(namespace = "http://bstu.by/fit/zholnerovich/course/server/soap", required = true)
     protected String password;
+    @XmlElement(namespace = "http://bstu.by/fit/zholnerovich/course/server/soap", required = true)
+    protected String email;
 
     /**
      * Gets the value of the username property.
@@ -85,6 +89,30 @@ public class RegistreringUser {
      */
     public void setPassword(String value) {
         this.password = value;
+    }
+
+    /**
+     * Gets the value of the email property.
+     * 
+     * @return
+     *     possible object is
+     *     {@link String }
+     *     
+     */
+    public String getEmail() {
+        return email;
+    }
+
+    /**
+     * Sets the value of the email property.
+     * 
+     * @param value
+     *     allowed object is
+     *     {@link String }
+     *     
+     */
+    public void setEmail(String value) {
+        this.email = value;
     }
 
 }

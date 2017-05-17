@@ -38,11 +38,11 @@ public class ObjectFactory {
     }
 
     /**
-     * Create an instance of {@link RegistreringUser }
+     * Create an instance of {@link UserData }
      * 
      */
-    public RegistreringUser createRegistreringUser() {
-        return new RegistreringUser();
+    public UserData createUserData() {
+        return new UserData();
     }
 
     /**

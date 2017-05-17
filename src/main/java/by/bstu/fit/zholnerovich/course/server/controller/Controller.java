@@ -1,10 +1,12 @@
 package by.bstu.fit.zholnerovich.course.server.controller;
 
+import by.bstu.fit.zholnerovich.course.server.entity.Episode;
 import by.bstu.fit.zholnerovich.course.server.service.interfaces.ISerialService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import java.io.IOException;
+import java.util.List;
 
 @RestController
 public class Controller {
@@ -24,6 +26,11 @@ public class Controller {
         return service.getSerials();
     }
 
+    @RequestMapping(value = "/getall", method = RequestMethod.GET)
+    @ResponseBody
+    public List<Episode> getAll(){
+        return service.getAll();
+    }
 
 //    @RequestMapping(value = "/testJson/{id}", method = RequestMethod.GET)
 //    @ResponseBody
