@@ -1,6 +1,8 @@
 package by.bstu.fit.zholnerovich.course.server.controller;
 
 import by.bstu.fit.zholnerovich.course.server.entity.Episode;
+import by.bstu.fit.zholnerovich.course.server.entity.Serial;
+import by.bstu.fit.zholnerovich.course.server.entity.User;
 import by.bstu.fit.zholnerovich.course.server.service.interfaces.ISerialService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -14,23 +16,43 @@ public class Controller {
     @Autowired
     private ISerialService service;
 
-    @RequestMapping(value = "/login", params = {"username", "password"}, method = RequestMethod.GET)
+    @RequestMapping(value = "/login", method = RequestMethod.POST)
     @ResponseBody
-    public String returnAnswer(@RequestParam(value = "username") String username, @RequestParam(value = "password") String password){
-        return service.answer(username, password);
+    public String login(@RequestBody String userData){
+        return service.login(userData.split(":")[0], userData.split(":")[1]);
     }
 
-    @RequestMapping(value = "/serials/get/all", method = RequestMethod.GET)
+    @RequestMapping(value = "/serials/get/all", method = RequestMethod.POST)
     @ResponseBody
-    public String returnSerials() throws IOException{
-        return service.getSerials();
+    public List<Serial> returnSerials(@RequestBody Long date) throws IOException{
+        return service.getAllSerials(date);
     }
 
-    @RequestMapping(value = "/getall", method = RequestMethod.GET)
+    @RequestMapping(value = "/get/all", method = RequestMethod.GET)
     @ResponseBody
     public List<Episode> getAll(){
         return service.getAll();
     }
+
+    @RequestMapping(value = "/getSerial", method = RequestMethod.GET)
+    @ResponseBody
+    public Serial getSerial(){
+        Serial serial = service.getSerial();
+        return service.getSerial();
+    }
+
+    @RequestMapping(value = "/get/user", method = RequestMethod.POST)
+    @ResponseBody
+    public String getUser(@RequestBody String login){
+        return service.getUser(login);
+    }
+
+    @RequestMapping(value = "/somePost", method = RequestMethod.POST)
+    @ResponseBody
+    public String saveJsonString(@RequestBody String str){
+        return service.returnString(str);
+    }
+
 
 //    @RequestMapping(value = "/testJson/{id}", method = RequestMethod.GET)
 //    @ResponseBody

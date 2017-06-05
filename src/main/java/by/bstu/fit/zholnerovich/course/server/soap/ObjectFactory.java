@@ -38,14 +38,6 @@ public class ObjectFactory {
     }
 
     /**
-     * Create an instance of {@link UserData }
-     * 
-     */
-    public UserData createUserData() {
-        return new UserData();
-    }
-
-    /**
      * Create an instance of {@link GetRegistrationResponse }
      * 
      */

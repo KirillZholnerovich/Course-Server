@@ -6,33 +6,34 @@ import javax.persistence.*;
 import java.util.Date;
 
 @Entity
-@Table(name = "serials_log")
-public class SerialLog {
+@Table(name = "logs")
+public class Log {
 
     @Id
-    @GeneratedValue(generator = "increment")
-    @GenericGenerator(name = "increment", strategy = "increment")
-    @Column(name = "id")
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
     @Column(name = "action", nullable = false, length = 20)
     private String action;
 
-    @ManyToOne
-    @JoinColumn(name = "serial_id")
-    private Serial serial;
+    @Column(name = "database")
+    private String database;
+
+    @Column(name = "row_id")
+    private Long serialId;
 
     @Column(name = "action_date")
     @Temporal(TemporalType.TIMESTAMP)
     private Date date;
 
-    public SerialLog() {
+    public Log() {
 
     }
 
-    public SerialLog(String action, Serial serial, Date date) {
+    public Log(String action, String database, Long serialId, Date date) {
         this.action = action;
-        this.serial = serial;
+        this.database = database;
+        this.serialId = serialId;
         this.date = date;
     }
 
@@ -52,12 +53,20 @@ public class SerialLog {
         this.action = action;
     }
 
-    public Serial getSerial() {
-        return serial;
+    public String getDatabase() {
+        return database;
     }
 
-    public void setSerial(Serial serial) {
-        this.serial = serial;
+    public void setDatabase(String database) {
+        this.database = database;
+    }
+
+    public Long getSerialId() {
+        return serialId;
+    }
+
+    public void setSerialId(Long serialId) {
+        this.serialId = serialId;
     }
 
     public Date getDate() {

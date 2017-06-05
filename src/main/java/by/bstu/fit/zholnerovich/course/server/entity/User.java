@@ -1,33 +1,45 @@
 package by.bstu.fit.zholnerovich.course.server.entity;
 
-import org.hibernate.annotations.GenericGenerator;
+import com.fasterxml.jackson.annotation.*;
+import org.hibernate.annotations.LazyCollection;
+import org.hibernate.annotations.LazyCollectionOption;
 
 import javax.persistence.*;
-import javax.sql.DataSource;
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
 @Entity
 @Table(name = "users")
+@JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "id")
 public class User {
 
     @Id
-    @GeneratedValue(generator = "increment")
-    @GenericGenerator(name = "increment", strategy = "increment")
-    @Column(name = "id")
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
     @Column(name = "login", nullable = false, length = 50)
     private String login;
 
     @Column(name = "password", nullable = false, length = 50)
+    @JsonIgnore
     private String password;
 
     @Column(name = "email", nullable = false, length = 50)
+    @JsonIgnore
     private String email;
 
     @Column(name = "last_sync")
     @Temporal(TemporalType.TIMESTAMP)
     private Date lastSync;
+
+    @ManyToMany
+    @LazyCollection(LazyCollectionOption.FALSE)
+    @JsonIgnoreProperties("episodes")
+    @JoinTable(name="users_serials",
+            joinColumns={@JoinColumn(name="user_id", referencedColumnName="id"), },
+            inverseJoinColumns={@JoinColumn(name="serial_id", referencedColumnName="id")})
+    private List<Serial> serials = new ArrayList<Serial>();
 
     public User() {
     }
@@ -77,5 +89,13 @@ public class User {
 
     public void setLastSync(Date lastSync) {
         this.lastSync = lastSync;
+    }
+
+    public List<Serial> getSerials() {
+        return serials;
+    }
+
+    public void setSerials(List<Serial> serials) {
+        this.serials = serials;
     }
 }
