@@ -8,11 +8,12 @@ import javax.persistence.*;
 import java.util.*;
 
 @Entity
-@Table(name = "serials")
+@Table(name = "films")
 @JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "id")
-public class Serial {
+public class Film {
 
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
     @Column(name = "name", nullable = false, length = 100)
@@ -24,36 +25,32 @@ public class Serial {
     @Column(name = "rating", nullable = false)
     private short rating;
 
-    @Column(name = "seasons", nullable = false)
-    private short seasons;
-
     @Column(name = "year", nullable = false, length = 5)
     private String year;
 
-    @Column(name = "status", nullable = false)
-    private boolean status;
+    @Column(name = "time", nullable = false)
+    private int time;
 
-    @OneToMany(mappedBy = "serial", cascade = CascadeType.ALL, orphanRemoval = true)
-    @LazyCollection(LazyCollectionOption.FALSE)
-    private List<Episode> episodes = new ArrayList<Episode>();
+    @Column(name = "description", nullable = false, length = 500)
+    private String description;
 
-    @ManyToMany(mappedBy = "serials")
+    @ManyToMany(mappedBy = "films")
     @LazyCollection(LazyCollectionOption.FALSE)
     @JsonIgnore
     private List<User> users = new ArrayList<User>();
 
-    public Serial() {
+    public Film() {
 
     }
 
-    public Serial(Long id, String name, String subname, short rating, short seasons, String year, boolean status) {
-        this.id = id;
+    public Film(String name, String subname, short rating, String year, int time, String description, List<User> users) {
         this.name = name;
         this.subname = subname;
         this.rating = rating;
-        this.seasons = seasons;
         this.year = year;
-        this.status = status;
+        this.time = time;
+        this.description = description;
+        this.users = users;
     }
 
     public Long getId() {
@@ -88,14 +85,6 @@ public class Serial {
         this.rating = rating;
     }
 
-    public short getSeasons() {
-        return seasons;
-    }
-
-    public void setSeasons(short seasons) {
-        this.seasons = seasons;
-    }
-
     public String getYear() {
         return year;
     }
@@ -104,20 +93,20 @@ public class Serial {
         this.year = year;
     }
 
-    public boolean isStatus() {
-        return status;
+    public int getTime() {
+        return time;
     }
 
-    public void setStatus(boolean status) {
-        this.status = status;
+    public void setTime(int time) {
+        this.time = time;
     }
 
-    public List<Episode> getEpisodes() {
-        return episodes;
+    public String getDescription() {
+        return description;
     }
 
-    public void setEpisodes(List<Episode> episodes) {
-        this.episodes = episodes;
+    public void setDescription(String description) {
+        this.description = description;
     }
 
     public List<User> getUsers() {

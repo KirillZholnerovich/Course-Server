@@ -19,7 +19,7 @@ public class RegistrationEndpoint {
 
     @PayloadRoot(namespace = NAMESPACE_URI, localPart = "getRegistrationRequest")
     @ResponsePayload
-    public GetRegistrationResponse responsee(@RequestPayload GetRegistrationRequest request) {
+    public GetRegistrationResponse response(@RequestPayload GetRegistrationRequest request) {
         GetRegistrationResponse response = new GetRegistrationResponse();
         response.setResponse(registrationUtility.registrateUser(request.getUserData()));
         return response;

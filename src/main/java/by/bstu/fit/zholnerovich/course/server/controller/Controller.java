@@ -1,14 +1,17 @@
 package by.bstu.fit.zholnerovich.course.server.controller;
 
-import by.bstu.fit.zholnerovich.course.server.entity.Episode;
-import by.bstu.fit.zholnerovich.course.server.entity.Serial;
+import by.bstu.fit.zholnerovich.course.server.entity.Film;
 import by.bstu.fit.zholnerovich.course.server.entity.User;
 import by.bstu.fit.zholnerovich.course.server.service.interfaces.ISerialService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 @RestController
 public class Controller {
@@ -18,57 +21,37 @@ public class Controller {
 
     @RequestMapping(value = "/login", method = RequestMethod.POST)
     @ResponseBody
-    public String login(@RequestBody String userData){
-        return service.login(userData.split(":")[0], userData.split(":")[1]);
+    public User login(@RequestBody Map<String, String> map){
+        return service.login(map.get("login"), map.get("password"));
     }
 
-    @RequestMapping(value = "/serials/get/all", method = RequestMethod.POST)
+    @RequestMapping(value = "/registration", method = RequestMethod.POST)
     @ResponseBody
-    public List<Serial> returnSerials(@RequestBody Long date) throws IOException{
-        return service.getAllSerials(date);
+    public User registration(@RequestBody User user) {
+        return service.registration(user);
     }
 
-    @RequestMapping(value = "/get/all", method = RequestMethod.GET)
+    @RequestMapping(value = "/loginweb", params = { "login", "password" }, method = RequestMethod.POST, produces={"application/json; charset=UTF-8"})
     @ResponseBody
-    public List<Episode> getAll(){
-        return service.getAll();
+    public User loginWeb(@RequestParam(value = "login") String login, @RequestParam(value = "password") String password){
+        return service.login(login, password);
     }
 
-    @RequestMapping(value = "/getSerial", method = RequestMethod.GET)
+    @RequestMapping(value = "/films/{id}", method = RequestMethod.GET)
     @ResponseBody
-    public Serial getSerial(){
-        Serial serial = service.getSerial();
-        return service.getSerial();
+    public List<Film> getAllFilmsById(@PathVariable("id") long id){
+        return service.getAllFilmsById(id);
     }
 
-    @RequestMapping(value = "/get/user", method = RequestMethod.POST)
+    @RequestMapping(value = "/films", method = RequestMethod.GET)
     @ResponseBody
-    public String getUser(@RequestBody String login){
-        return service.getUser(login);
+    public List<Film> getAllFilms(){
+        return service.getAllFilms();
     }
 
-    @RequestMapping(value = "/somePost", method = RequestMethod.POST)
+    @RequestMapping(value = "/viewed/set",params = { "userId", "filmId" }, method = RequestMethod.POST, produces={"application/json; charset=UTF-8"})
     @ResponseBody
-    public String saveJsonString(@RequestBody String str){
-        return service.returnString(str);
+    public String addToViewed(@RequestParam(value = "userId") long userId, @RequestParam(value = "filmId") long filmId){
+        return service.addToViewed(userId, filmId);
     }
-
-
-//    @RequestMapping(value = "/testJson/{id}", method = RequestMethod.GET)
-//    @ResponseBody
-//    public Users getJsonString(@PathVariable("id") long testId){
-//        return service.get(testId);
-//    }
-//
-//    @RequestMapping(value = "/testJson", method = RequestMethod.POST)
-//    @ResponseBody
-//    public Users saveJsonString(@RequestBody Users test){
-//        return service.save(test);
-//    }
-//
-//    @RequestMapping(value = "/testJson/{id}", method = RequestMethod.DELETE)
-//    @ResponseBody
-//    public void delete(@PathVariable("id") long testId){
-//        service.remove(testId);
-//    }
 }

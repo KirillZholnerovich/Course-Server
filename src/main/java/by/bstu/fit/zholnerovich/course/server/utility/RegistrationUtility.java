@@ -25,12 +25,6 @@ public class RegistrationUtility {
 
     public String registrateUser(String userData){
 
-        list = userRepository.findAll();
-        for (User user : list) {
-            if(user.getLogin().equals(userData.split(":")[0]))
-                return ALREADY_EXISTS;
-        }
-        userRepository.saveAndFlush(new User(userData.split(":")[0], userData.split(":")[1],userData.split(":")[2], new Date()));
-        return SUCCESSFUL_REGISTRATION;
+        return null;
     }
 }

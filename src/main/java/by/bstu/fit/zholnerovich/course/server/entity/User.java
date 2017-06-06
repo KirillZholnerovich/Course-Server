@@ -22,33 +22,33 @@ public class User {
     private String login;
 
     @Column(name = "password", nullable = false, length = 50)
-    @JsonIgnore
     private String password;
 
     @Column(name = "email", nullable = false, length = 50)
-    @JsonIgnore
     private String email;
-
-    @Column(name = "last_sync")
-    @Temporal(TemporalType.TIMESTAMP)
-    private Date lastSync;
 
     @ManyToMany
     @LazyCollection(LazyCollectionOption.FALSE)
-    @JsonIgnoreProperties("episodes")
-    @JoinTable(name="users_serials",
+    @JsonIgnore
+    @JoinTable(name="users_films",
             joinColumns={@JoinColumn(name="user_id", referencedColumnName="id"), },
-            inverseJoinColumns={@JoinColumn(name="serial_id", referencedColumnName="id")})
-    private List<Serial> serials = new ArrayList<Serial>();
+            inverseJoinColumns={@JoinColumn(name="film_id", referencedColumnName="id")})
+    private List<Film> films = new ArrayList<Film>();
 
     public User() {
     }
 
-    public User(String login, String password, String email, Date date ) {
+    public User(String login, String password, String email) {
         this.login = login;
         this.password = password;
         this.email = email;
-        this.lastSync = date;
+    }
+
+    public User(Long id,String login, String password, String email) {
+        this.id = id;
+        this.login = login;
+        this.password = password;
+        this.email = email;
     }
 
     public Long getId() {
@@ -83,19 +83,11 @@ public class User {
         this.email = email;
     }
 
-    public Date getLastSync() {
-        return lastSync;
+    public List<Film> getFilms() {
+        return films;
     }
 
-    public void setLastSync(Date lastSync) {
-        this.lastSync = lastSync;
-    }
-
-    public List<Serial> getSerials() {
-        return serials;
-    }
-
-    public void setSerials(List<Serial> serials) {
-        this.serials = serials;
+    public void setFilms(List<Film> films) {
+        this.films = films;
     }
 }

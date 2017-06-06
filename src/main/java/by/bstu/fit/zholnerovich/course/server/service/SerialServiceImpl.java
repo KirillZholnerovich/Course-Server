@@ -1,22 +1,20 @@
 package by.bstu.fit.zholnerovich.course.server.service;
 
-import by.bstu.fit.zholnerovich.course.server.entity.Episode;
-import by.bstu.fit.zholnerovich.course.server.entity.Serial;
+import by.bstu.fit.zholnerovich.course.server.entity.Film;
+import by.bstu.fit.zholnerovich.course.server.entity.Log;
 import by.bstu.fit.zholnerovich.course.server.entity.User;
-import by.bstu.fit.zholnerovich.course.server.repository.EpisodeRepository;
-import by.bstu.fit.zholnerovich.course.server.repository.SerialRepository;
+import by.bstu.fit.zholnerovich.course.server.entity.UserFilm;
+import by.bstu.fit.zholnerovich.course.server.repository.FilmRepository;
+import by.bstu.fit.zholnerovich.course.server.repository.LogRepository;
+import by.bstu.fit.zholnerovich.course.server.repository.UserFilmRepository;
 import by.bstu.fit.zholnerovich.course.server.repository.UserRepository;
 import by.bstu.fit.zholnerovich.course.server.service.interfaces.ISerialService;
-import org.jsoup.Jsoup;
-import org.jsoup.nodes.Document;
-import org.jsoup.nodes.Element;
-import org.jsoup.select.Elements;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartFile;
 
-import java.io.IOException;
 import java.util.ArrayList;
-import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
 
 @Service
@@ -26,86 +24,57 @@ public class SerialServiceImpl implements ISerialService {
     private UserRepository userRepository;
 
     @Autowired
-    private SerialRepository serialRepository;
+    private FilmRepository filmRepository;
 
     @Autowired
-    private EpisodeRepository episodeRepository;
+    private LogRepository logRepository;
 
-    private static final String ALL_SERIALS_URL = "https://myshows.me/search/all/?page=";
-    private static final String SERIAL_URL = "https://myshows.me/view/";
+    @Autowired
+    private UserFilmRepository userFilmRepository;
 
-    public String login(String username, String password) {
+    public User login(String username, String password) {
         List<User> list = userRepository.findAll();
         for (User user : list){
             if (user.getLogin().equals(username) && user.getPassword().equals(password)){
-                return "Вы успешно вошли";
+                return user;
             }
         }
-        return "Такого пользователя не существует";
+        return new User(-1L, "Пользователь не найден", "", "");
     }
 
-//    public String getSerials() {
-//        for (int i = 0; i < 50; i++){
-//            try {
-//                Document document = Jsoup.connect(ALL_SERIALS_URL + i).get();
-//
-//                Elements elements = document.getElementsByTag("tr");
-//                elements.remove(0);
-//
-//                for (Element element : elements) {
-//                    Element myElement = element.child(0).child(0);
-//                    String idS = myElement.attr("href").split("/", 6)[4];
-//                    Long id = Long.parseLong(idS);
-//                    String name = myElement.text();
-//                    String subname = element.child(0).child(2).text();
-//                    boolean status = false;
-//                    if(element.child(0).child(1).attr("class").equals("status _onair"))
-//                        status = true;
-//                    Date date = new Date();
-//
-//                    document = Jsoup.connect(SERIAL_URL + id + "/").get();
-//
-//                    Elements Seasons = document.getElementsByAttributeValue("itemprop", "season");
-//                    String lastEpisode = "" + Seasons.size() + ":";
-//                    Element episode = Seasons.get(0).getElementsByAttributeValue("itemprop", "episodeNumber").get(0);
-//                    lastEpisode += episode.attr("content");
-////                    serialRepository.saveAndFlush(new Serial(id, name, subname, lastEpisode, status, date));
-//                }
-//            } catch (IOException e){
-//                e.printStackTrace();
-//            }
-//        }
-//        return "All serials was added to database!";
-//    }
-
-    public List<Serial> getAllSerials(Long date){
-        if (date == 0L){
-            return serialRepository.findAll();
-        } else {
-            return null;
-        }
-
-    }
-
-    public List<Episode> getAll() {
-        return episodeRepository.findAll();
-    }
-
-    public Serial getSerial(){
-        return serialRepository.findOne(3L);
-    }
-
-    public String returnString(String string){
-        return string;
-    }
-
-    public String getUser(String login){
-        List<User> list = userRepository.findAll();
-        for (User user : list){
-            if (user.getLogin().equals(login)){
-                return user.getLogin() + ":" + user.getPassword() + ":" + user.getEmail();
+    public User registration(User user) {
+        for (User existUser : userRepository.findAll()) {
+            if(user.getLogin().equals(existUser.getLogin())){
+                return new User(-1L, "Пользователь с таким именем уже существует", "", "");
             }
         }
-        return "Такой пользователь не зарегистрирован";
+        userRepository.saveAndFlush(user);
+        for (User existUser : userRepository.findAll()) {
+            if(user.getLogin().equals(existUser.getLogin())){
+                return existUser;
+            }
+        }
+        return new User(-1L, "Неизвестная ошибка", "", "");
+    }
+
+    public List<Film> getAllFilmsById(Long id){
+        List<Film> list = new ArrayList<Film>();
+        for (Film film: filmRepository.findAll()) {
+            for (User user :film.getUsers()) {
+                if (user.getId() == id){
+                    list.add(film);
+                }
+            }
+        }
+        return list;
+    }
+
+    public List<Film> getAllFilms(){
+        return filmRepository.findAll();
+    }
+
+    public String addToViewed(Long userId, Long filmId){
+        userFilmRepository.saveAndFlush(new UserFilm(userId, filmId));
+        return "lol";
     }
 }
