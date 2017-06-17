@@ -16,7 +16,7 @@ import java.util.List;
 @Configuration
 @EnableWebMvc
 @ComponentScan("by.bstu.fit.zholnerovich.course.server")
-@Import({AppConfig.class})
+@Import({SoapConfig.class})
 public class WebConfig extends WebMvcConfigurerAdapter{
 
     @Override

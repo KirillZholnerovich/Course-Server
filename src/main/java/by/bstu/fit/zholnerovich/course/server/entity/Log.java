@@ -1,7 +1,5 @@
 package by.bstu.fit.zholnerovich.course.server.entity;
 
-import org.hibernate.annotations.GenericGenerator;
-
 import javax.persistence.*;
 import java.util.Date;
 
@@ -20,7 +18,7 @@ public class Log {
     private String database;
 
     @Column(name = "row_id")
-    private Long serialId;
+    private Long rowId;
 
     @Column(name = "action_date")
     @Temporal(TemporalType.TIMESTAMP)
@@ -30,10 +28,10 @@ public class Log {
 
     }
 
-    public Log(String action, String database, Long serialId, Date date) {
+    public Log(String action, String database, Long rowId, Date date) {
         this.action = action;
         this.database = database;
-        this.serialId = serialId;
+        this.rowId = rowId;
         this.date = date;
     }
 
@@ -61,12 +59,12 @@ public class Log {
         this.database = database;
     }
 
-    public Long getSerialId() {
-        return serialId;
+    public Long getRowId() {
+        return rowId;
     }
 
-    public void setSerialId(Long serialId) {
-        this.serialId = serialId;
+    public void setRowId(Long rowId) {
+        this.rowId = rowId;
     }
 
     public Date getDate() {

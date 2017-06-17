@@ -21,7 +21,7 @@ public class RegistrationEndpoint {
     @ResponsePayload
     public GetRegistrationResponse response(@RequestPayload GetRegistrationRequest request) {
         GetRegistrationResponse response = new GetRegistrationResponse();
-        response.setResponse(registrationUtility.registrateUser(request.getUserData()));
+        response.setResponse(registrationUtility.setResponseBody(request.getRequest()));
         return response;
     }
 }

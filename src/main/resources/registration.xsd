@@ -4,7 +4,7 @@
     <xs:element name="getRegistrationRequest">
         <xs:complexType>
             <xs:sequence>
-                <xs:element name="userData" type="xs:string"/>
+                <xs:element name="request" type="xs:string"/>
             </xs:sequence>
         </xs:complexType>
     </xs:element>

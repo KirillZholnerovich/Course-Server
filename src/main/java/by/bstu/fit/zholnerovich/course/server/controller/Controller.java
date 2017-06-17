@@ -2,6 +2,9 @@ package by.bstu.fit.zholnerovich.course.server.controller;
 
 import by.bstu.fit.zholnerovich.course.server.entity.Film;
 import by.bstu.fit.zholnerovich.course.server.entity.User;
+import by.bstu.fit.zholnerovich.course.server.entity.UserFilm;
+import by.bstu.fit.zholnerovich.course.server.models.SyncData;
+import by.bstu.fit.zholnerovich.course.server.models.SyncRequest;
 import by.bstu.fit.zholnerovich.course.server.service.interfaces.ISerialService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.ui.Model;
@@ -19,22 +22,10 @@ public class Controller {
     @Autowired
     private ISerialService service;
 
-    @RequestMapping(value = "/login", method = RequestMethod.POST)
+    @RequestMapping(value = "/sync", method = RequestMethod.POST)
     @ResponseBody
-    public User login(@RequestBody Map<String, String> map){
-        return service.login(map.get("login"), map.get("password"));
-    }
-
-    @RequestMapping(value = "/registration", method = RequestMethod.POST)
-    @ResponseBody
-    public User registration(@RequestBody User user) {
-        return service.registration(user);
-    }
-
-    @RequestMapping(value = "/loginweb", params = { "login", "password" }, method = RequestMethod.POST, produces={"application/json; charset=UTF-8"})
-    @ResponseBody
-    public User loginWeb(@RequestParam(value = "login") String login, @RequestParam(value = "password") String password){
-        return service.login(login, password);
+    public SyncData addToViewed(@RequestBody Long time){
+        return service.synchronization(time);
     }
 
     @RequestMapping(value = "/films/{id}", method = RequestMethod.GET)
@@ -49,9 +40,15 @@ public class Controller {
         return service.getAllFilms();
     }
 
-    @RequestMapping(value = "/viewed/set",params = { "userId", "filmId" }, method = RequestMethod.POST, produces={"application/json; charset=UTF-8"})
+    @RequestMapping(value = "/sync/viewed", method = RequestMethod.POST)
     @ResponseBody
-    public String addToViewed(@RequestParam(value = "userId") long userId, @RequestParam(value = "filmId") long filmId){
-        return service.addToViewed(userId, filmId);
+    public SyncData addToViewed(@RequestBody SyncRequest viewed){
+        return service.addToViewed(viewed.getDate(), viewed.getViewed().getUserId(), viewed.getViewed().getFilmId());
     }
+
+//    @RequestMapping(value = "/sync/viewed",params = { "userId", "filmId" }, method = RequestMethod.POST, produces={"application/json; charset=UTF-8"})
+//    @ResponseBody
+//    public String addToViewed(@RequestParam(value = "userId") long userId, @RequestParam(value = "filmId") long filmId){
+//        return service.addToViewed(userId, filmId);
+//    }
 }

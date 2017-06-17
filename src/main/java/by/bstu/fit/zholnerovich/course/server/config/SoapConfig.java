@@ -13,19 +13,19 @@ import org.springframework.xml.xsd.XsdSchema;
 @Configuration
 @EnableWs
 @ComponentScan("by.bstu.fit.zholnerovich.course.server")
-public class AppConfig extends WsConfigurerAdapter {
+public class SoapConfig extends WsConfigurerAdapter {
     @Bean(name = "registration")
-    public DefaultWsdl11Definition defaultWsdl11Definition(XsdSchema registrationSchema) {
+    public DefaultWsdl11Definition defaultWsdl11Definition(XsdSchema regSchema) {
         DefaultWsdl11Definition wsdl11Definition = new DefaultWsdl11Definition();
-        wsdl11Definition.setPortTypeName("RegistrationPort");
+        wsdl11Definition.setPortTypeName("RegPort");
         wsdl11Definition.setLocationUri("/registration");
         wsdl11Definition.setTargetNamespace("http://bstu.by/fit/zholnerovich/course/server/soap");
-        wsdl11Definition.setSchema(registrationSchema);
+        wsdl11Definition.setSchema(regSchema);
         return wsdl11Definition;
     }
 
     @Bean
-    public XsdSchema registrationSchema() {
+    public XsdSchema regSchema() {
         return new SimpleXsdSchema(new ClassPathResource("registration.xsd"));
     }
 }

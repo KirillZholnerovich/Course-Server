@@ -23,6 +23,10 @@ public class UserFilm {
     public UserFilm() {
     }
 
+    public UserFilm(Long id) {
+        this.id = id;
+    }
+
     public UserFilm(Long userId, Long filmId) {
         this.userId = userId;
         this.filmId = filmId;

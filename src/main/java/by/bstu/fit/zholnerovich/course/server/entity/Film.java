@@ -43,6 +43,10 @@ public class Film {
 
     }
 
+    public Film(Long id) {
+        this.id = id;
+    }
+
     public Film(String name, String subname, short rating, String year, int time, String description, List<User> users) {
         this.name = name;
         this.subname = subname;
